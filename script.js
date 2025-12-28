@@ -128,28 +128,36 @@ updateResults();
 // ============================================
 
 let currentDisplay = '0';
+let expression = '';
 let firstOperand = null;
 let operator = null;
 let waitingForSecondOperand = false;
 
 function updateDisplay() {
     const display = document.getElementById('calcDisplay');
-    display.textContent = currentDisplay;
+    display.textContent = expression || currentDisplay;
 }
 
 function appendNumber(num) {
     if (waitingForSecondOperand) {
         currentDisplay = num;
+        expression += num;
         waitingForSecondOperand = false;
     } else {
         if (currentDisplay === '0' && num !== '.') {
             currentDisplay = num;
+            if (!expression || expression.match(/[\+\-\*\/]$/)) {
+                expression += num;
+            } else {
+                expression = num;
+            }
         } else {
             // Prevent multiple decimal points
             if (num === '.' && currentDisplay.includes('.')) {
                 return;
             }
             currentDisplay += num;
+            expression += num;
         }
     }
     updateDisplay();
@@ -160,10 +168,12 @@ function appendOperator(nextOperator) {
     
     if (firstOperand === null) {
         firstOperand = inputValue;
+        expression = currentDisplay + ' ' + nextOperator + ' ';
     } else if (operator) {
         const result = performCalculation(firstOperand, inputValue, operator);
         currentDisplay = String(result);
         firstOperand = result;
+        expression = currentDisplay + ' ' + nextOperator + ' ';
     }
     
     waitingForSecondOperand = true;
@@ -194,9 +204,12 @@ function calculateResult() {
         
         if (result === 'Error') {
             currentDisplay = 'Error';
+            expression = 'Error';
         } else {
             // Round to 8 decimal places to avoid floating point issues
-            currentDisplay = String(Math.round(result * 100000000) / 100000000);
+            const roundedResult = Math.round(result * 100000000) / 100000000;
+            expression = expression + ' = ' + roundedResult;
+            currentDisplay = String(roundedResult);
         }
         
         firstOperand = null;
@@ -209,6 +222,7 @@ function calculateResult() {
 
 function clearCalculator() {
     currentDisplay = '0';
+    expression = '';
     firstOperand = null;
     operator = null;
     waitingForSecondOperand = false;
@@ -216,10 +230,18 @@ function clearCalculator() {
 }
 
 function deleteLastChar() {
-    if (currentDisplay.length > 1) {
+    if (expression.includes('=')) {
+        // If result is shown, clear everything
+        clearCalculator();
+        return;
+    }
+    
+    if (currentDisplay.length > 1 && !waitingForSecondOperand) {
         currentDisplay = currentDisplay.slice(0, -1);
-    } else {
+        expression = expression.slice(0, -1);
+    } else if (!waitingForSecondOperand) {
         currentDisplay = '0';
+        expression = expression.slice(0, -1);
     }
     updateDisplay();
 }
