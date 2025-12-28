@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Area Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Land Area Calculator</h1>
+        <p class="subtitle">Convert land measurements across all units</p>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="inputValue">Enter Value:</label>
+                <input type="number" id="inputValue" placeholder="Enter a value" step="any" min="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="inputUnit">Select Unit:</label>
+                <select id="inputUnit">
+                    <option value="inch">Inch</option>
+                    <option value="feet">Feet</option>
+                    <option value="sqfeet" selected>Sq Feet</option>
+                    <option value="yard">Yard</option>
+                    <option value="sqyard">Sq Yard</option>
+                    <option value="gunta">Gunta</option>
+                    <option value="cent">Cent</option>
+                    <option value="ankanam">Ankanam</option>
+                    <option value="acre">Acre</option>
+                    <option value="hectare">Hectare</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2>Converted Values:</h2>
+            <div class="results-grid">
+                <div class="result-item">
+                    <span class="result-label">Inch:</span>
+                    <span class="result-value" id="result-inch">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Feet:</span>
+                    <span class="result-value" id="result-feet">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Sq Feet:</span>
+                    <span class="result-value" id="result-sqfeet">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Yard:</span>
+                    <span class="result-value" id="result-yard">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Sq Yard:</span>
+                    <span class="result-value" id="result-sqyard">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Gunta:</span>
+                    <span class="result-value" id="result-gunta">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Cent:</span>
+                    <span class="result-value" id="result-cent">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Ankanam:</span>
+                    <span class="result-value" id="result-ankanam">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Acre:</span>
+                    <span class="result-value" id="result-acre">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Hectare:</span>
+                    <span class="result-value" id="result-hectare">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
