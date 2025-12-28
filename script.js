@@ -122,3 +122,108 @@ inputUnit.addEventListener('change', updateResults);
 // Initialize with default values (optional)
 inputValue.value = '';
 updateResults();
+
+// ============================================
+// CALCULATOR FUNCTIONS
+// ============================================
+
+let currentDisplay = '0';
+let firstOperand = null;
+let operator = null;
+let waitingForSecondOperand = false;
+
+function updateDisplay() {
+    const display = document.getElementById('calcDisplay');
+    display.textContent = currentDisplay;
+}
+
+function appendNumber(num) {
+    if (waitingForSecondOperand) {
+        currentDisplay = num;
+        waitingForSecondOperand = false;
+    } else {
+        if (currentDisplay === '0' && num !== '.') {
+            currentDisplay = num;
+        } else {
+            // Prevent multiple decimal points
+            if (num === '.' && currentDisplay.includes('.')) {
+                return;
+            }
+            currentDisplay += num;
+        }
+    }
+    updateDisplay();
+}
+
+function appendOperator(nextOperator) {
+    const inputValue = parseFloat(currentDisplay);
+    
+    if (firstOperand === null) {
+        firstOperand = inputValue;
+    } else if (operator) {
+        const result = performCalculation(firstOperand, inputValue, operator);
+        currentDisplay = String(result);
+        firstOperand = result;
+    }
+    
+    waitingForSecondOperand = true;
+    operator = nextOperator;
+    updateDisplay();
+}
+
+function performCalculation(first, second, operator) {
+    switch (operator) {
+        case '+':
+            return first + second;
+        case '-':
+            return first - second;
+        case '*':
+            return first * second;
+        case '/':
+            return second !== 0 ? first / second : 'Error';
+        default:
+            return second;
+    }
+}
+
+function calculateResult() {
+    const inputValue = parseFloat(currentDisplay);
+    
+    if (operator && firstOperand !== null) {
+        const result = performCalculation(firstOperand, inputValue, operator);
+        
+        if (result === 'Error') {
+            currentDisplay = 'Error';
+        } else {
+            // Round to 8 decimal places to avoid floating point issues
+            currentDisplay = String(Math.round(result * 100000000) / 100000000);
+        }
+        
+        firstOperand = null;
+        operator = null;
+        waitingForSecondOperand = true;
+    }
+    
+    updateDisplay();
+}
+
+function clearCalculator() {
+    currentDisplay = '0';
+    firstOperand = null;
+    operator = null;
+    waitingForSecondOperand = false;
+    updateDisplay();
+}
+
+function deleteLastChar() {
+    if (currentDisplay.length > 1) {
+        currentDisplay = currentDisplay.slice(0, -1);
+    } else {
+        currentDisplay = '0';
+    }
+    updateDisplay();
+}
+
+// Initialize calculator display
+updateDisplay();
+

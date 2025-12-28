@@ -81,6 +81,40 @@
         </div>
     </div>
 
+    <!-- Basic Calculator -->
+    <div class="container calculator-container">
+        <h1>Basic Calculator</h1>
+        <div class="calculator">
+            <div class="calculator-display">
+                <div id="calcDisplay">0</div>
+            </div>
+            <div class="calculator-buttons">
+                <button class="calc-btn calc-clear" onclick="clearCalculator()">C</button>
+                <button class="calc-btn calc-operator" onclick="appendOperator('/')">/</button>
+                <button class="calc-btn calc-operator" onclick="appendOperator('*')">×</button>
+                <button class="calc-btn calc-operator" onclick="deleteLastChar()">←</button>
+                
+                <button class="calc-btn calc-number" onclick="appendNumber('7')">7</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('8')">8</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('9')">9</button>
+                <button class="calc-btn calc-operator" onclick="appendOperator('-')">-</button>
+                
+                <button class="calc-btn calc-number" onclick="appendNumber('4')">4</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('5')">5</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('6')">6</button>
+                <button class="calc-btn calc-operator" onclick="appendOperator('+')">+</button>
+                
+                <button class="calc-btn calc-number" onclick="appendNumber('1')">1</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('2')">2</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('3')">3</button>
+                <button class="calc-btn calc-equals" onclick="calculateResult()" style="grid-row: span 2;">=</button>
+                
+                <button class="calc-btn calc-number" onclick="appendNumber('0')" style="grid-column: span 2;">0</button>
+                <button class="calc-btn calc-number" onclick="appendNumber('.')">.</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
